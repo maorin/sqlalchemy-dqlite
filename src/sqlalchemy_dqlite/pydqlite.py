@@ -8,7 +8,7 @@ from sqlalchemy import util
 import os
 
 
-class _SQLite_rqliteTimeStamp(DATETIME):
+class _SQLite_dqliteTimeStamp(DATETIME):
     def bind_processor(self, dialect):
         if dialect.native_datetime:
             return None
@@ -22,7 +22,7 @@ class _SQLite_rqliteTimeStamp(DATETIME):
             return DATETIME.result_processor(self, dialect, coltype)
 
 
-class _SQLite_rqliteDate(DATE):
+class _SQLite_dqliteDate(DATE):
     def bind_processor(self, dialect):
         if dialect.native_datetime:
             return None
@@ -36,28 +36,28 @@ class _SQLite_rqliteDate(DATE):
             return DATE.result_processor(self, dialect, coltype)
 
 
-class SQLiteDialect_rqlite(SQLiteDialect):
+class SQLiteDialect_dqlite(SQLiteDialect):
     default_paramstyle = 'qmark'
 
     colspecs = util.update_copy(
         SQLiteDialect.colspecs,
         {
-            sqltypes.Date: _SQLite_rqliteDate,
-            sqltypes.TIMESTAMP: _SQLite_rqliteTimeStamp,
+            sqltypes.Date: _SQLite_dqliteDate,
+            sqltypes.TIMESTAMP: _SQLite_dqliteTimeStamp,
         }
     )
 
     if not util.py2k:
         description_encoding = None
 
-    driver = 'pyrqlite'
+    driver = 'pydqlite'
 
     # pylint: disable=method-hidden
     @classmethod
     def dbapi(cls):
         try:
             # pylint: disable=no-name-in-module
-            from pyrqlite import dbapi2 as sqlite
+            from pydqlite import dbapi2 as sqlite
             #from sqlite3 import dbapi2 as sqlite  # try 2.5+ stdlib name.
         except ImportError:
             #raise e
@@ -90,4 +90,4 @@ class SQLiteDialect_rqlite(SQLiteDialect):
     def is_disconnect(self, e, connection, cursor):
         return False
 
-dialect = SQLiteDialect_rqlite
+dialect = SQLiteDialect_dqlite

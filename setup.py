@@ -11,7 +11,7 @@ from setuptools import (
 
 # Load constants.py without importing __init__.py, since pip
 # calls setup.py before sqlalchemy is installed.
-with open(os.path.join('src', 'sqlalchemy_rqlite', 'constants.py'), 'rt') as f:
+with open(os.path.join('src', 'sqlalchemy_dqlite', 'constants.py'), 'rt') as f:
     exec(f.read())
 
 
@@ -67,18 +67,18 @@ class PyLint(Command):
         raise SystemExit(errno)
 
 setup_params = dict(
-    name="sqlalchemy_rqlite",
+    name="sqlalchemy_dqlite",
     version=__version__,
-    description="SQLAlchemy dialect for rqlite",
+    description="SQLAlchemy dialect for dqlite",
     author=__author__,
     author_email=__email__,
     maintainer=__author__,
     maintainer_email=__email__,
     install_requires=[
         "SQLAlchemy",
-        "pyrqlite",
+        "pydqlite",
     ],
-    dependency_links=['https://github.com/rqlite/pyrqlite/tarball/master#egg=pyrqlite-2'],
+    dependency_links=['https://github.com/dqlite/pydqlite/tarball/master#egg=pydqlite-2'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Console',
@@ -95,7 +95,7 @@ setup_params = dict(
         'Programming Language :: Python :: Implementation :: PyPy',
         'Topic :: Database :: Front-Ends',
     ],
-    keywords='rqlite SQLAlchemy',
+    keywords='dqlite SQLAlchemy',
     package_dir={'': 'src'},
     packages=find_packages('src', exclude=['test']),
     include_package_data=True,
@@ -103,7 +103,7 @@ setup_params = dict(
     cmdclass={'test': PyTest, 'lint': PyLint},
     entry_points={
         "sqlalchemy.dialects":
-            ["rqlite.pyrqlite = sqlalchemy_rqlite.pyrqlite:dialect"]
+            ["dqlite.pydqlite = sqlalchemy_dqlite.pydqlite:dialect"]
     },
     license=__license__,
 )

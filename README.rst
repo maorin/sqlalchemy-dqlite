@@ -1,7 +1,8 @@
 rqlite dialect for SQLAlchemy
 ==============================
 
-This is the rqlite dialect driver for SQLAlchemy.
+This is the dqlite dialect driver for SQLAlchemy.
+It was adapted from the driver for rqlite
 
 
 installation
@@ -9,7 +10,7 @@ installation
 
 To install this dialect run::
 
-    $ pip install sqlalchemy_rqlite
+    $ pip install sqlalchemy_dqlite
 
 or from source::
 
@@ -23,13 +24,13 @@ usage
 To start using this dialect::
 
     from sqlalchemy import create_engine
-    engine = create_engine('rqlite+pyrqlite://localhost:4001/', echo=True)
+    engine = create_engine('dqlite+pydqlite://localhost:4001/', echo=True)
 
 If you don't want to install this library (for example during development) add
 this folder to your PYTHONPATH and register this dialect with SQLAlchemy::
 
     from sqlalchemy.dialects import registry
-    registry.register("rqlite.pyrqlite", "sqlalchemy_rqlite.pyrqlite", "dialect")
+    registry.register("dqlite.pydqlite", "sqlalchemy_dqlite.pydqlite", "dialect")
 
 testing
 -------
@@ -48,4 +49,5 @@ more info
 ---------
 
  * http://www.sqlalchemy.org/
+ * https://github.com/canonical/dqlite
  * https://github.com/rqlite/rqlite

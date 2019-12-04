@@ -1,2 +1,2 @@
-pyrqlite
+pydqlite
 SQLAlchemy
