@@ -78,7 +78,7 @@ setup_params = dict(
         "SQLAlchemy",
         "pydqlite",
     ],
-    dependency_links=['https://github.com/dqlite/pydqlite/tarball/master#egg=pydqlite-2'],
+    dependency_links=['https://github.com/paulstuart/pydqlite/'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Console',
