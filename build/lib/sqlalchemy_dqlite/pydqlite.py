@@ -4,6 +4,7 @@ from sqlalchemy.dialects.sqlite.base import SQLiteDialect, DATETIME, DATE
 from sqlalchemy import exc, pool
 from sqlalchemy import types as sqltypes
 from sqlalchemy import util
+from sqlalchemy import expression
 
 import os
 
@@ -70,10 +71,16 @@ class SQLiteDialect_dqlite(SQLiteDialect):
             return pool.NullPool
         else:
             return pool.SingletonThreadPool
-    # def _check_unicode_returns(self, connection):
-    #     # 覆盖这个方法，确保返回的结果是正确的 Unicode 数据
-    #     return True  # 如果你确定你的数据库返回的都是 Unicode 字符串
     
+    # def _check_unicode_returns(self, connection, additional_tests=None):
+    #     # 定义了一组 Unicode 检查的测试
+    #     tests = [
+    #         expression.cast(expression.literal_column("'test plain returns'"), sqltypes.VARCHAR(60)),
+    #         expression.cast(expression.literal_column("'test unicode returns'"), sqltypes.Unicode(60)),
+    #     ]
+        
+    #     return False
+
     
     def create_connect(self, *args, **kwargs):
         # 你的连接代码
@@ -102,8 +109,7 @@ class SQLiteDialect_dqlite(SQLiteDialect):
     
     def get_isolation_level(self, connection):
         # 执行 PRAGMA 读取未提交状态
-        c = connection.execute("PRAGMA read_uncommitted")
-        result = c.fetchone()
+        result = connection.execute("PRAGMA read_uncommitted").fetchone()
         print(f"Isolation level: {result[0]}")
             # 将结果转换为字符串并去除空格和换行符
         result_str = str(result[0]).strip()
@@ -123,7 +129,6 @@ class SQLiteDialect_dqlite(SQLiteDialect):
         cursor.execute(statement, parameters or ())
         print(f"Cursor3333333: {cursor}")
 
-
     def do_fetchall(self, cursor):
         # 提供 fetchall 的标准接口
         print(f"Cursor22222: {cursor}")
@@ -137,7 +142,7 @@ class SQLiteDialect_dqlite(SQLiteDialect):
     def do_rollback(self, connection):
         # 处理事务回滚
         print("Rolling back in do_rollback ......")
-        #connection.rollback()
+        connection.rollback()
     
     def do_close(self, cursor):
         print("Closing cursor")
